@@ -9,10 +9,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('this is group 21'),
+        body: Column(
+          children: [
+            Text('data'), 
+            Image(image: AssetImage('assets/logo.jpg'))],
         ),
       ),
     );

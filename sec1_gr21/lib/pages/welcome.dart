@@ -20,14 +20,14 @@ class Welcomepage extends StatelessWidget {
               ElevatedButton(
                 child: const Text("Login"),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/loginpage');
+                  Navigator.pushNamed(context, '/login');
                 },
               ),
               const SizedBox(height: 10),
               ElevatedButton(
                 child: const Text("Register"),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/registerpage');
+                  Navigator.pushNamed(context, '/register');
                 },
               ),
             ],

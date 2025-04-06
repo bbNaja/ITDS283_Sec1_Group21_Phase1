@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Registerpage extends StatelessWidget {
+class Loginpage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register'),
+        title: Text('Login'),
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            // Text('Register'),
+            // Text('Login'),
             TextField(
               controller: emailController,
               decoration: InputDecoration(labelText: 'Email'),
@@ -26,19 +24,21 @@ class Registerpage extends StatelessWidget {
               obscureText: true,
               decoration: InputDecoration(labelText: 'Password'),
             ),
-            TextField(
-              controller: confirmPasswordController,
-              obscureText: true,
-              decoration: InputDecoration(labelText: 'Confirm Password'),
-            ),
             SizedBox(height: 20),
             ElevatedButton(
-              child: Text("Register"),
+              child: Text("Login"),
               onPressed: () {
-                // Normally you'd validate and register here
-                Navigator.pushReplacementNamed(context, '/loginpage');
+                // Normally add auth logic here
+                // Navigator.pushReplacementNamed(context, '/homepage');
+                Navigator.pushNamed(context, '/home');
               },
             ),
+            TextButton(
+              child: Text("Don't have an account? Register"),
+              onPressed: () {
+                Navigator.pushNamed(context, '/register');
+              },
+            )
           ],
         ),
       ),

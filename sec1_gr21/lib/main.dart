@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'login/loginpage.dart';
-import 'login/registerpage.dart';
-import 'homepage.dart';
-import 'welcomepage.dart';
+import 'pages/login/login.dart';
+import 'pages/login/register.dart';
+import 'pages/homepage.dart';
+import 'pages/welcome.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,12 +14,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'home',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/welcomepage',
+      initialRoute: '/',
       routes: {
         '/': (context) => Welcomepage(),
-        '/loginpage': (context) => Loginpage(),
-        '/homepage': (context) => Homepage(),
-        '/registerpage': (context) => Registerpage(),
+        '/login': (context) => Loginpage(),
+        '/home': (context) => Homepage(),
+        '/register': (context) => Registerpage(),
       },
     );
   }

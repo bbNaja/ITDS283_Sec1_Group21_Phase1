@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sec1_gr21/route/route_constant.dart';
 
 class Loginpage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -30,13 +31,13 @@ class Loginpage extends StatelessWidget {
               onPressed: () {
                 // Normally add auth logic here
                 // Navigator.pushReplacementNamed(context, '/homepage');
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, homepageRoute);
               },
             ),
             TextButton(
               child: Text("Don't have an account? Register"),
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushNamed(context, registerpageRoute);
               },
             )
           ],

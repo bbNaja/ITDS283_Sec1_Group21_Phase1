@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'pages/login/login.dart';
-import 'pages/login/register.dart';
-import 'pages/homepage.dart';
-import 'pages/welcome.dart';
+import 'route/route_constant.dart';
+import 'route/router.dart' as router;
 
 void main() {
   runApp(MyApp());
@@ -12,15 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'home',
+      title: 'SeWork',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => Welcomepage(),
-        '/login': (context) => Loginpage(),
-        '/home': (context) => Homepage(),
-        '/register': (context) => Registerpage(),
-      },
+      onGenerateRoute: router.generateRoute,
+      initialRoute: welcomepageRoute,
     );
   }
 }

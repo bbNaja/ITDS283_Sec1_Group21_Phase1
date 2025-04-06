@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sec1_gr21/route/route_constant.dart';
 
 class Homepage extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class Homepage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacementNamed(context, welcomepageRoute);
               // Navigator.pushNamed(context, '/');
             },
           )

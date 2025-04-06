@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sec1_gr21/route/route_constant.dart';
 
 class Registerpage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -36,7 +37,7 @@ class Registerpage extends StatelessWidget {
               child: Text("Register"),
               onPressed: () {
                 // Normally you'd validate and register here
-                Navigator.pushReplacementNamed(context, '/login');
+                Navigator.pushReplacementNamed(context, loginpageRoute);
               },
             ),
           ],

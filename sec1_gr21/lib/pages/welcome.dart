@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sec1_gr21/route/route_constant.dart';
 
 class Welcomepage extends StatelessWidget {
   @override
@@ -20,14 +21,14 @@ class Welcomepage extends StatelessWidget {
               ElevatedButton(
                 child: const Text("Login"),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.pushNamed(context, loginpageRoute);
                 },
               ),
               const SizedBox(height: 10),
               ElevatedButton(
                 child: const Text("Register"),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/register');
+                  Navigator.pushNamed(context, registerpageRoute);
                 },
               ),
             ],

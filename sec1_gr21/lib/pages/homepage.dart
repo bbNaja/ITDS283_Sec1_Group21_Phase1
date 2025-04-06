@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
+import 'package:sec1_gr21/components/appbar.dart';
+import 'package:sec1_gr21/theme/theme_manager.dart';
 
 class Homepage extends StatelessWidget {
+  final ThemeManager themeManager;
+
+  const Homepage({Key? key, required this.themeManager}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Home"),
-        automaticallyImplyLeading: false, // for remove the back icon
-
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, welcomepageRoute);
-              // Navigator.pushNamed(context, '/');
-            },
-          )
-        ],
+      appBar: NavBar(
+        themeManager: themeManager,
       ),
       body: Center(
         child:

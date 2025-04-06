@@ -1,38 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 
-class Welcomepage extends StatelessWidget {
+class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          // This centers everything in the body
-          child: Column(
-            mainAxisSize:
-                MainAxisSize.min, // Makes Column take minimal vertical space
-            children: [
-              Text(
-                'welcome to หางานให้ผู้สูงอายุ',
-                style: TextStyle(fontSize: 20), // Optional: add styling
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        //make ui not conflicted
+        child: Stack(
+          children: [
+            Center(
+              child: Image.asset(
+                'assets/logo.jpg',
+                width: 250,
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                child: const Text("Login"),
-                onPressed: () {
-                  Navigator.pushNamed(context, loginpageRoute);
-                },
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 70.0), //button height
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[800],
+                        shape: StadiumBorder(),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, loginpageRoute);
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[800],
+                        shape: StadiumBorder(),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, registerpageRoute);
+                      },
+                      child: Text(
+                        "Register",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                child: const Text("Register"),
-                onPressed: () {
-                  Navigator.pushNamed(context, registerpageRoute);
-                },
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

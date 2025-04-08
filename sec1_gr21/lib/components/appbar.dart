@@ -14,25 +14,25 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       backgroundColor: Colors.white,
       elevation: 2,
-      leading: showBackButton
-          ? IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          : null,
+      // leading: showBackButton
+      //     ? IconButton(
+      //         icon: Icon(Icons.arrow_back, color: Colors.black),
+      //         onPressed: () {
+      //           Navigator.pop(context);
+      //         },
+      //       )
+      //     : null,
       centerTitle: true,
       actions: [
-        Switch(
-          value: themeManager.themeMode == ThemeMode.dark,
-          onChanged: (newValue) {
-            themeManager.toggleTheme(newValue);
-          },
-        ),
+        // Switch(
+        //   value: themeManager.themeMode == ThemeMode.dark,
+        //   onChanged: (newValue) {
+        //     themeManager.toggleTheme(newValue);
+        //   },
+        // ),
         IconButton(
           icon: Icon(Icons.chat_bubble_outline, color: Colors.black),
           onPressed: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sec1_gr21/theme/theme_manager.dart';
+import 'package:sec1_gr21/route/route_constant.dart';
 
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
@@ -14,7 +15,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: true,
+      // automaticallyImplyLeading: true, // เอาไว้ดูปุ่มย้อนกลับ
       backgroundColor: Colors.white,
       elevation: 2,
       // leading: showBackButton
@@ -49,6 +50,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.account_circle_outlined, color: Colors.black),
           onPressed: () {
             // TODO: navigate to profile
+            Navigator.pushNamed(context, profilepageRoute);
           },
         ),
       ],

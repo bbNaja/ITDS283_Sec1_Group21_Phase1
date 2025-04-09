@@ -15,6 +15,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (context) => Homepage(themeManager: themeManager));
     case registerpageRoute:
       return MaterialPageRoute(builder: (context) => Registerpage());
+    case profilepageRoute:
+      return MaterialPageRoute(builder:(context) => ProfilePage());
+
     default:
       return MaterialPageRoute(
           builder: (context) => Scaffold(

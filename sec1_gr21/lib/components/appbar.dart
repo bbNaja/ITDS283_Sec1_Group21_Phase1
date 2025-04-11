@@ -38,6 +38,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.chat_bubble_outline, color: Colors.black),
           onPressed: () {
             // TODO: navigate to chat
+            Navigator.pushNamed(context, chatpageRoute);
           },
         ),
         IconButton(

@@ -8,15 +8,40 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case welcomepageRoute:
       return MaterialPageRoute(builder: (context) => WelcomePage());
+
     case loginpageRoute:
       return MaterialPageRoute(builder: (context) => Loginpage());
+
     case homepageRoute:
       return MaterialPageRoute(
           builder: (context) => Homepage(themeManager: themeManager));
+
     case registerpageRoute:
       return MaterialPageRoute(builder: (context) => Registerpage());
+
     case profilepageRoute:
-      return MaterialPageRoute(builder:(context) => ProfilePage());
+      return MaterialPageRoute(
+          builder: (context) => ProfilePage(themeManager: themeManager));
+
+    case editprofilepageRoute:
+      return MaterialPageRoute(
+          builder: (context) => EditProfilePage(themeManager: themeManager));
+
+    case findjobpageRoute:
+      return MaterialPageRoute(
+          builder: (context) => FindJobPage(themeManager: themeManager));
+
+    case hirejobpageRoute:
+      return MaterialPageRoute(
+          builder: (context) => HireJobPage(themeManager: themeManager));
+
+    case learnnewthingpageRoute:
+      return MaterialPageRoute(
+          builder: (context) => learnnewthingPage(themeManager: themeManager));
+
+    case chatpageRoute:
+      return MaterialPageRoute(
+          builder: (context) => ChatPage(themeManager: themeManager));
 
     default:
       return MaterialPageRoute(

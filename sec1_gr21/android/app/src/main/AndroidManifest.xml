@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sec1_gr21">
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="sec1_gr21"
         android:name="${applicationName}"

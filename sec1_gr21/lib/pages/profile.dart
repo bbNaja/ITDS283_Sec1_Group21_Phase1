@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     top: 0,
                     right: 0,
                     child: IconButton(
-                      icon: const Icon(Icons.edit),
+                      icon: const Icon(Icons.edit, color: Colors.grey),
                       iconSize: 32,
                       onPressed: () {
                         Navigator.pushNamed(context, editprofilepageRoute);
@@ -46,7 +46,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 20),
+              Center(
+                child: TextButton.icon(
+                    onPressed: () {
+                      Navigator.pushNamed(context, editprofilepageRoute);
+                    },
+                    icon: const Icon(Icons.edit, color: Colors.black),
+                    label: const Text(
+                      'Edit',
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    )),
+              ),
+              const SizedBox(height: 20),
               Container(child: Profilename()),
               const SizedBox(height: 30),
               Container(child: Workexp()),

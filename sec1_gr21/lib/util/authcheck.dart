@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sec1_gr21/pages/login/login.dart';
-import 'package:sec1_gr21/pages/menu.dart';
+
 import 'package:sec1_gr21/route/route_constant.dart';
 
 class AuthCheck extends StatefulWidget {

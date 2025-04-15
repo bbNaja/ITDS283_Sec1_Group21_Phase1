@@ -1,4 +1,4 @@
-import 'package:sec1_gr21/pages/authcheck.dart';
+import 'package:sec1_gr21/util/authcheck.dart';
 import 'package:sec1_gr21/theme/theme_constant.dart';
 import 'package:sec1_gr21/theme/theme_manager.dart';
 import 'route/route_constant.dart';

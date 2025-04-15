@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/model/menuitem.dart';
-import 'package:sec1_gr21/theme/theme_manager.dart';
 
 class Homepage extends StatelessWidget {
-  final ThemeManager themeManager;
   final auth = FirebaseAuth.instance;
 
-  Homepage({Key? key, required this.themeManager}) : super(key: key);
+  Homepage({
+    Key? key,
+  }) : super(key: key);
 
   final List<MenuItem> formenu = [
     MenuItem("หางาน", "assets/logo.jpg", findjobpageRoute),
@@ -20,12 +20,11 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fullEmail = auth.currentUser?.email ?? "Guest";
-    final userEmail = fullEmail.split('@').first;
+    final userEmail = fullEmail.split('@').first; //only name before @ in email
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: NavBar(
-        themeManager: themeManager,
-        // showBackButton: false,   // เพื่อเอาปุ่มย้อนกลับออก
+        showBackButton: false, // เพื่อเอาปุ่มย้อนกลับออก
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,6 +97,19 @@ class Homepage extends StatelessWidget {
               ),
             );
           }).toList(),
+          const SizedBox(height: 40),
+          Center(
+              child: TextButton.icon(
+            icon: const Icon(Icons.logout, color: Colors.red),
+            label: const Text(
+              'Sign Out',
+              style: TextStyle(color: Colors.red, fontSize: 16),
+            ),
+            onPressed: () async {
+              await auth.signOut();
+              Navigator.pushReplacementNamed(context, welcomepageRoute);
+            },
+          ))
         ],
       ),
     );

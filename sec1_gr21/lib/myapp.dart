@@ -1,3 +1,4 @@
+import 'package:sec1_gr21/pages/authcheck.dart';
 import 'package:sec1_gr21/theme/theme_constant.dart';
 import 'package:sec1_gr21/theme/theme_manager.dart';
 import 'route/route_constant.dart';
@@ -35,6 +36,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SeWork',
+      home: AuthCheck(),
       theme: lightTheme, //default
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,

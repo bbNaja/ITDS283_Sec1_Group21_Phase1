@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sec1_gr21/theme/theme_manager.dart';
 
 class Forfindjob extends StatefulWidget {
-  final ThemeManager themeManager;
-
   const Forfindjob({
     Key? key,
-    required this.themeManager,
   }) : super(key: key);
 
   @override

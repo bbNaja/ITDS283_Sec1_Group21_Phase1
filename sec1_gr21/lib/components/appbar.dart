@@ -4,28 +4,26 @@ import 'package:sec1_gr21/route/route_constant.dart';
 
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
-  final ThemeManager themeManager;
 
   const NavBar({
     Key? key,
-    required this.themeManager,
     this.showBackButton = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // automaticallyImplyLeading: true, // เอาไว้ดูปุ่มย้อนกลับ
+      automaticallyImplyLeading: false, // เอาไว้ดูปุ่มย้อนกลับ
       backgroundColor: Colors.white,
       elevation: 2,
-      // leading: showBackButton
-      //     ? IconButton(
-      //         icon: Icon(Icons.arrow_back, color: Colors.black),
-      //         onPressed: () {
-      //           Navigator.pop(context);
-      //         },
-      //       )
-      //     : null,
+      leading: showBackButton
+          ? IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          : null,
       centerTitle: true,
       actions: [
         // Switch(

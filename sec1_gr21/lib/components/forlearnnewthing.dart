@@ -3,11 +3,8 @@ import 'package:sec1_gr21/theme/theme_manager.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 
 class Forlearnnewthing extends StatefulWidget {
-  final ThemeManager themeManager;
-
   const Forlearnnewthing({
     Key? key,
-    required this.themeManager,
   }) : super(key: key);
 
   @override

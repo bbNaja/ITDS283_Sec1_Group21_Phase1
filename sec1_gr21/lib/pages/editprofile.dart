@@ -5,18 +5,14 @@ import 'package:sec1_gr21/components/foreditprofile.dart';
 import 'package:sec1_gr21/theme/theme_manager.dart';
 
 class EditProfilePage extends StatelessWidget {
-  final ThemeManager themeManager;
-  const EditProfilePage({Key? key, required this.themeManager})
-      : super(key: key);
+  const EditProfilePage({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(
-        themeManager: themeManager,
-      ),
-      body: Foreditprofile(
-        themeManager: themeManager,
-      ),
+      appBar: NavBar(),
+      body: Foreditprofile(),
     );
   }
 }

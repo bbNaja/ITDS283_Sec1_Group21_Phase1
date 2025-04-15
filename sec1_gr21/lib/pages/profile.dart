@@ -1,20 +1,71 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 import 'package:sec1_gr21/components/appbar.dart';
-import 'package:sec1_gr21/components/forprofile.dart';
-import 'package:sec1_gr21/theme/theme_manager.dart';
+import 'package:sec1_gr21/components/profile/workexp.dart';
+import 'package:sec1_gr21/components/profile/profilename.dart';
 
-class ProfilePage extends StatelessWidget {
-  final ThemeManager themeManager;
-  const ProfilePage({Key? key, required this.themeManager}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(
-        themeManager: themeManager,
-      ),
-      body: Forprofile(
-        themeManager: themeManager,
+      appBar: NavBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 60),
+              Stack(
+                alignment: Alignment.centerRight,
+                children: [
+                  const CircleAvatar(
+                    radius: 70,
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: IconButton(
+                      icon: const Icon(Icons.edit),
+                      iconSize: 32,
+                      onPressed: () {
+                        Navigator.pushNamed(context, editprofilepageRoute);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 60),
+              Container(child: Profilename()),
+              const SizedBox(height: 30),
+              Container(child: Workexp()),
+              const SizedBox(height: 40),
+              Center(
+                  child: TextButton.icon(
+                icon: const Icon(Icons.logout, color: Colors.red),
+                label: const Text(
+                  'Sign Out',
+                  style: TextStyle(color: Colors.red, fontSize: 16),
+                ),
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacementNamed(context, loginpageRoute);
+                },
+              ))
+            ],
+          ),
+        ),
       ),
     );
   }

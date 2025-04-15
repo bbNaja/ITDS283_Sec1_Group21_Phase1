@@ -6,10 +6,7 @@ import 'package:sec1_gr21/theme/theme_manager.dart';
 import 'package:sec1_gr21/components/forlearnnewthing.dart';
 
 class learnnewthingPage extends StatefulWidget {
-  final ThemeManager themeManager;
-
-  const learnnewthingPage({Key? key, required this.themeManager})
-      : super(key: key);
+  const learnnewthingPage({Key? key}) : super(key: key);
 
   @override
   _HireJobPageState createState() => _HireJobPageState();
@@ -19,12 +16,8 @@ class _HireJobPageState extends State<learnnewthingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar(
-        themeManager: themeManager,
-      ),
-      body: Forlearnnewthing(
-        themeManager: themeManager,
-      ),
+      appBar: NavBar(),
+      body: Forlearnnewthing(),
     );
   }
 }

@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sec1_gr21/theme/theme_manager.dart';
 
 class Foreditprofile extends StatefulWidget {
-  final ThemeManager themeManager;
-
   const Foreditprofile({
     Key? key,
-    required this.themeManager,
   }) : super(key: key);
 
   @override

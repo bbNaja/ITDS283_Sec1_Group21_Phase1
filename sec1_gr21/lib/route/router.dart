@@ -13,35 +13,28 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => Loginpage());
 
     case homepageRoute:
-      return MaterialPageRoute(
-          builder: (context) => Homepage(themeManager: themeManager));
+      return MaterialPageRoute(builder: (context) => Homepage());
 
     case registerpageRoute:
       return MaterialPageRoute(builder: (context) => Registerpage());
 
     case profilepageRoute:
-      return MaterialPageRoute(
-          builder: (context) => ProfilePage(themeManager: themeManager));
+      return MaterialPageRoute(builder: (context) => ProfilePage());
 
     case editprofilepageRoute:
-      return MaterialPageRoute(
-          builder: (context) => EditProfilePage(themeManager: themeManager));
+      return MaterialPageRoute(builder: (context) => EditProfilePage());
 
     case findjobpageRoute:
-      return MaterialPageRoute(
-          builder: (context) => FindJobPage(themeManager: themeManager));
+      return MaterialPageRoute(builder: (context) => FindJobPage());
 
     case hirejobpageRoute:
-      return MaterialPageRoute(
-          builder: (context) => HireJobPage(themeManager: themeManager));
+      return MaterialPageRoute(builder: (context) => HireJobPage());
 
     case learnnewthingpageRoute:
-      return MaterialPageRoute(
-          builder: (context) => learnnewthingPage(themeManager: themeManager));
+      return MaterialPageRoute(builder: (context) => learnnewthingPage());
 
     case chatpageRoute:
-      return MaterialPageRoute(
-          builder: (context) => ChatPage(themeManager: themeManager));
+      return MaterialPageRoute(builder: (context) => ChatPage());
 
     default:
       return MaterialPageRoute(

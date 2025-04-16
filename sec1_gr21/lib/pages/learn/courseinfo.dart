@@ -26,6 +26,42 @@ class _CourseinfoState extends State<CourseinfoPage> {
     });
   }
 
+  Widget _controlView(BuildContext context) {
+    return Container(
+        height: 120,
+        width: MediaQuery.of(context).size.width,
+        color: Color(0xFF6985e8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon:
+                  const Icon(Icons.fast_rewind, size: 32, color: Colors.white),
+              onPressed: () {
+                // handle rewind
+              },
+            ),
+            const SizedBox(width: 24),
+            // Play/Pause
+            IconButton(
+              icon: const Icon(Icons.play_arrow, size: 36, color: Colors.white),
+              onPressed: () {
+                // handle play/pause
+              },
+            ),
+            const SizedBox(width: 24),
+            // Forward
+            IconButton(
+              icon:
+                  const Icon(Icons.fast_forward, size: 32, color: Colors.white),
+              onPressed: () {
+                // handle skip
+              },
+            )
+          ],
+        ));
+  }
+
   _initData() async {
     try {
       await DefaultAssetBundle.of(context)
@@ -79,35 +115,55 @@ class _CourseinfoState extends State<CourseinfoPage> {
                       //Hour/min each course
                       Courselength(),
                     ],
-                  ))
-              : Container(
+                  ),
+                )
+              : Column(
                   // Video player
-                  child: Column(
                   children: [
                     Container(
-                        height: 100,
-                        padding: const EdgeInsets.only(top: 50, left: 30),
-                        child: Row(
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(Icons.arrow_back,
-                                    size: 20, color: Colors.grey[500])),
-                            SizedBox(height: 10),
-                            Container(
-                              height: 200,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: VideoPlayerBox(
-                                  url: videoInfo[selectedIndex!]['videoUrl']),
+                      height: 220,
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
+                          // Video
+                          Positioned.fill(
+                            child: VideoPlayerBox(
+                              key: ValueKey(selectedIndex),
+                              url: videoInfo[selectedIndex!]['videoUrl'],
                             ),
-                            Expanded(child: Container()),
-                          ],
-                        ))
+                          ),
+                          // 🔙 Back button on top-left
+                          SafeArea(
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.6),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: IconButton(
+                                    icon: const Icon(Icons.arrow_back,
+                                        color: Colors.black),
+                                    onPressed: () {
+                                      setState(() {
+                                        _playarea = false;
+                                        selectedIndex = null;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _controlView(context),
                   ],
-                )),
+                ),
           Expanded(
               child: Container(
             //use for avaliable space

@@ -5,6 +5,7 @@
     <application
         android:label="sec1_gr21"
         android:name="${applicationName}"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -20,7 +20,8 @@ dependencies:
   firebase_auth: ^5.5.2
   fluttertoast: ^8.2.12
   provider: ^6.1.4
-  shared_preferences: ^2.5.3
+  video_player: 
+  
 
 dev_dependencies:
   flutter_test:
@@ -45,8 +46,17 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/logo.jpg
-    - assets/findwork.jpg
+    - assets/
+    - assets/json/videoinfo.json
+   
+    # - assets/logo.jpg
+    # - assets/findwork.jpg
+    - assets/squat1.jpg
+    - assets/squat2.jpg
+    - assets/squat3.jpg
+    - assets/squat4.jpg
+   
+    
 
   # To add assets to your application, add an assets section, like this:
   # assets:

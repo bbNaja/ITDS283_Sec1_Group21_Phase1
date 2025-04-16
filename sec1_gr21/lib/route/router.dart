@@ -33,6 +33,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case learnnewthingpageRoute:
       return MaterialPageRoute(builder: (context) => learnnewthingPage());
 
+    case courseinfoRoute:
+      return MaterialPageRoute(builder: (context) => CourseinfoPage());
+
     case chatpageRoute:
       return MaterialPageRoute(builder: (context) => ChatPage());
 

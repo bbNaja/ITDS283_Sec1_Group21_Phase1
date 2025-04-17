@@ -48,9 +48,11 @@ class _RegisterpageState extends State<Registerpage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
+              backgroundColor: Colors.white,
               appBar: AppBar(
                 title: const Text('Register'),
                 centerTitle: true,
+                backgroundColor: Colors.grey[300],
               ),
               body: SingleChildScrollView(
                 padding:

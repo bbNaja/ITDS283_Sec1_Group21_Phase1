@@ -10,13 +10,13 @@ class ChatService {
   //   'email': aa@gmail.com,
   //   'id':..
   // }
-  Stream<List<Map<String,dynamic>> getUsersStream(){
-    return _firestore.collection("Users").snapshots().map((snapshot){
-      return snapshot.docs.map((doc){
-      //go through individual user
-      final user = doc.data();
+  Stream<List<Map<String, dynamic>>> getUsersStream() {
+    return _firestore.collection("Users").snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //go through individual user
+        final user = doc.data();
 
-      return user;
+        return user;
       }).toList();
     });
   }

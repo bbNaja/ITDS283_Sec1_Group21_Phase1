@@ -25,6 +25,7 @@ class _FindJobPageState extends State<FindJobPage> {
         item.name.contains(searchText)).toList();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: NavBar(),
       body: SingleChildScrollView(
         child: Padding(

@@ -14,7 +14,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false, // เอาไว้ดูปุ่มย้อนกลับ
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[300],
       elevation: 2,
       leading: showBackButton
           ? IconButton(

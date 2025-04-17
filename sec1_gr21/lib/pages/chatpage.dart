@@ -18,24 +18,24 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBar(),
-      body: _buildUserList(),
+      // body: _buildUserList(),
     );
   }
-
-  Widget _buildUserList() {
-    return StreamBuilder(
-        stream: _chatService.getUsersStream(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Error');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading ...");
-          }
-          return ListView(
-            children: snapshot.data!
-                .map<Widget>((userData) => _buildUserListItem().toList()),
-          );
-        });
-  }
 }
+//   Widget _buildUserList() {
+//     return StreamBuilder(
+//         stream: _chatService.getUsersStream(),
+//         builder: (context, snapshot) {
+//           if (snapshot.hasError) {
+//             return const Text('Error');
+//           }
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return const Text("Loading ...");
+//           }
+//           return ListView(
+//             children: snapshot.data!
+//                 .map<Widget>((userData) => _buildUserListItem().toList()),
+//           );
+//         });
+//   }
+// }

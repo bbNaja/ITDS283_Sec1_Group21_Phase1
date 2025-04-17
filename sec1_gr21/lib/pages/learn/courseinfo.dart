@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/learn/courselength.dart';
 import 'package:video_player/video_player.dart';
+import 'package:sec1_gr21/components/learn/videoplayer.dart';
 
 class CourseinfoPage extends StatefulWidget {
   const CourseinfoPage({super.key});
@@ -15,24 +16,12 @@ class _CourseinfoState extends State<CourseinfoPage> {
   List videoInfo = [];
   bool _playarea = false;
   int? selectedIndex;
-  VideoPlayerController? _controller;
 
-  Future<void> _onTapVideo(int index) async {
-    final url = videoInfo[index]['videoUrl'];
-
-    final oldController = _controller;
-    final newController = VideoPlayerController.network(url);
-
-    await newController.initialize();
-    await newController.play();
-
+  _onTapVideo(int index) {
     setState(() {
       selectedIndex = index;
       _playarea = true;
-      _controller = newController;
     });
-
-    oldController?.dispose();
   }
 
   Widget _controlView(BuildContext context) {
@@ -46,39 +35,21 @@ class _CourseinfoState extends State<CourseinfoPage> {
           IconButton(
             icon: const Icon(Icons.fast_rewind, size: 32, color: Colors.white),
             onPressed: () {
-              if (_controller != null) {
-                final current = _controller!.value.position;
-                _controller!.seekTo(current - const Duration(seconds: 5));
-              }
+              // handle rewind
             },
           ),
           const SizedBox(width: 24),
           IconButton(
-            icon: Icon(
-              _controller?.value.isPlaying ?? false
-                  ? Icons.pause
-                  : Icons.play_arrow,
-              size: 36,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.play_arrow, size: 36, color: Colors.white),
             onPressed: () {
-              setState(() {
-                if (_controller != null) {
-                  _controller!.value.isPlaying
-                      ? _controller!.pause()
-                      : _controller!.play();
-                }
-              });
+              // handle play/pause
             },
           ),
           const SizedBox(width: 24),
           IconButton(
             icon: const Icon(Icons.fast_forward, size: 32, color: Colors.white),
             onPressed: () {
-              if (_controller != null) {
-                final current = _controller!.value.position;
-                _controller!.seekTo(current + const Duration(seconds: 5));
-              }
+              // handle skip
             },
           )
         ],
@@ -86,7 +57,7 @@ class _CourseinfoState extends State<CourseinfoPage> {
     );
   }
 
-  Future<void> _initData() async {
+  _initData() async {
     try {
       final data = await DefaultAssetBundle.of(context)
           .loadString('assets/json/videoinfo.json');
@@ -102,12 +73,6 @@ class _CourseinfoState extends State<CourseinfoPage> {
   void initState() {
     super.initState();
     _initData();
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 
   @override
@@ -128,8 +93,7 @@ class _CourseinfoState extends State<CourseinfoPage> {
                   ? Container(
                       width: MediaQuery.of(context).size.width,
                       height: 150,
-                      padding:
-                          const EdgeInsets.only(top: 40, left: 30, right: 30),
+                      padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -151,37 +115,28 @@ class _CourseinfoState extends State<CourseinfoPage> {
                               child: Stack(
                                 children: [
                                   Positioned.fill(
-                                    child: _controller != null &&
-                                            _controller!.value.isInitialized
-                                        ? AspectRatio(
-                                            aspectRatio:
-                                                _controller!.value.aspectRatio,
-                                            child: VideoPlayer(_controller!),
-                                          )
-                                        : const Center(
-                                            child: CircularProgressIndicator()),
+                                    child: VideoPlayerBox(
+                                      key: ValueKey(selectedIndex),
+                                      url: videoInfo[selectedIndex!]['videoUrl'],
+                                    ),
                                   ),
                                   SafeArea(
                                     child: Align(
                                       alignment: Alignment.topLeft,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, top: 10),
+                                        padding: const EdgeInsets.only(left: 10, top: 10),
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color:
-                                                Colors.white.withOpacity(0.6),
+                                            color: Colors.white.withOpacity(0.6),
                                             shape: BoxShape.circle,
                                           ),
                                           child: IconButton(
-                                            icon: const Icon(Icons.arrow_back,
-                                                color: Colors.black),
+                                            icon: const Icon(Icons.arrow_back, color: Colors.black),
                                             onPressed: () {
                                               setState(() {
                                                 _playarea = false;
                                                 selectedIndex = null;
                                               });
-                                              _controller?.pause();
                                             },
                                           ),
                                         ),
@@ -199,8 +154,7 @@ class _CourseinfoState extends State<CourseinfoPage> {
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
-                    borderRadius:
-                        BorderRadius.only(topRight: Radius.circular(70)),
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(70)),
                   ),
                   child: Column(
                     children: [
@@ -213,7 +167,6 @@ class _CourseinfoState extends State<CourseinfoPage> {
                           color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 30),
                       Expanded(
                         child: ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -234,11 +187,9 @@ class _CourseinfoState extends State<CourseinfoPage> {
                                           width: 80,
                                           height: 80,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(10),
                                             image: DecorationImage(
-                                              image: AssetImage(videoInfo[index]
-                                                  ['thumbnail']),
+                                              image: AssetImage(videoInfo[index]['thumbnail']),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -246,8 +197,7 @@ class _CourseinfoState extends State<CourseinfoPage> {
                                         const SizedBox(width: 10),
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 videoInfo[index]["title"],
@@ -259,8 +209,7 @@ class _CourseinfoState extends State<CourseinfoPage> {
                                               const SizedBox(height: 10),
                                               Text(
                                                 videoInfo[index]["time"],
-                                                style: TextStyle(
-                                                    color: Colors.grey[500]),
+                                                style: TextStyle(color: Colors.grey[500]),
                                               )
                                             ],
                                           ),

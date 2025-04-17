@@ -48,7 +48,9 @@ class _LoginpageState extends State<Loginpage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
+              backgroundColor: Colors.white,
               appBar: AppBar(
+                backgroundColor: Colors.grey[300],
                 title: const Text('Login'),
                 centerTitle: true,
               ),

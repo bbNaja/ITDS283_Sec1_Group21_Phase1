@@ -14,8 +14,9 @@ class Homepage extends StatelessWidget {
   final List<MenuItem> formenu = [
     MenuItem("หางาน", "assets/logo.jpg", findjobpageRoute),
     MenuItem("จ้างงาน", "assets/findwork.jpg", hirejobpageRoute),
+    // MenuItem("เรียนรู้สิ่งใหม่", "assets/logo.jpg",courseinfoRoute), //change to learnnewthing later
     MenuItem("เรียนรู้สิ่งใหม่", "assets/logo.jpg",
-        courseinfoRoute), //change to learnnewthing later
+learnnewthingpageRoute), //change to learnnewthing later
   ];
 
   @override

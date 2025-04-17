@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/learn/courselength.dart';
 import 'package:video_player/video_player.dart';
@@ -16,99 +18,69 @@ class _CourseinfoState extends State<CourseinfoPage> {
   List videoInfo = [];
   bool _playarea = false;
   int? selectedIndex;
-  VideoPlayerController? _controller;
 
-  Future<void> _onTapVideo(int index) async {
-    final url = videoInfo[index]['videoUrl'];
-
-    final oldController = _controller;
-    final newController = VideoPlayerController.network(url);
-
-    await newController.initialize();
-    await newController.play();
-
+  _onTapVideo(int index) {
     setState(() {
       selectedIndex = index;
       _playarea = true;
-      _controller = newController;
     });
-
-    oldController?.dispose();
   }
 
   Widget _controlView(BuildContext context) {
     return Container(
-      height: 120,
-      width: MediaQuery.of(context).size.width,
-      color: const Color(0xFF6985e8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.fast_rewind, size: 32, color: Colors.white),
-            onPressed: () {
-              if (_controller != null) {
-                final current = _controller!.value.position;
-                _controller!.seekTo(current - const Duration(seconds: 5));
-              }
-            },
-          ),
-          const SizedBox(width: 24),
-          IconButton(
-            icon: Icon(
-              _controller?.value.isPlaying ?? false
-                  ? Icons.pause
-                  : Icons.play_arrow,
-              size: 36,
-              color: Colors.white,
+        height: 120,
+        width: MediaQuery.of(context).size.width,
+        color: Color(0xFF6985e8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon:
+                  const Icon(Icons.fast_rewind, size: 32, color: Colors.white),
+              onPressed: () {
+                // handle rewind
+              },
             ),
-            onPressed: () {
-              setState(() {
-                if (_controller != null) {
-                  _controller!.value.isPlaying
-                      ? _controller!.pause()
-                      : _controller!.play();
-                }
-              });
-            },
-          ),
-          const SizedBox(width: 24),
-          IconButton(
-            icon: const Icon(Icons.fast_forward, size: 32, color: Colors.white),
-            onPressed: () {
-              if (_controller != null) {
-                final current = _controller!.value.position;
-                _controller!.seekTo(current + const Duration(seconds: 5));
-              }
-            },
-          )
-        ],
-      ),
-    );
+            const SizedBox(width: 24),
+            // Play/Pause
+            IconButton(
+              icon: const Icon(Icons.play_arrow, size: 36, color: Colors.white),
+              onPressed: () {
+                // handle play/pause
+              },
+            ),
+            const SizedBox(width: 24),
+            // Forward
+            IconButton(
+              icon:
+                  const Icon(Icons.fast_forward, size: 32, color: Colors.white),
+              onPressed: () {
+                // handle skip
+              },
+            )
+          ],
+        ));
   }
 
-  Future<void> _initData() async {
+  _initData() async {
     try {
-      final data = await DefaultAssetBundle.of(context)
-          .loadString('assets/json/videoinfo.json');
-      setState(() {
-        videoInfo = json.decode(data);
+      await DefaultAssetBundle.of(context)
+          .loadString('assets/json/videoinfo.json')
+          .then((value) {
+        setState(() {
+          videoInfo = json.decode(value);
+        });
       });
     } catch (e) {
-      debugPrint('Error loading JSON: $e');
+      print('Error loading JSON:$e');
     }
   }
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     _initData();
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 
   @override

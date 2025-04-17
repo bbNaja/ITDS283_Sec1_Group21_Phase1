@@ -20,7 +20,7 @@ class _HireJobPageState extends State<learnnewthingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: NavBar(),
+
         // body: SingleChildScrollView(
         //     child: Column(
         //   children: [

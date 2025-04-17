@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:sec1_gr21/model/profile.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Registerpage extends StatefulWidget {
   @override
@@ -154,13 +155,14 @@ class _RegisterpageState extends State<Registerpage> {
                                     .createUserWithEmailAndPassword(
                                         email: profile.email!,
                                         password: profile.password!)
-                                    .then((value) {
+                                    .then((value) async {
+                                  await saveUserInfoToFirestore(value.user!);
                                   formKey.currentState!.reset();
                                   Fluttertoast.showToast(
                                       msg: "Create Successfully",
                                       gravity: ToastGravity.TOP);
                                   Navigator.pushReplacementNamed(
-                                      context, loginpageRoute);
+                                      context, homepageRoute);
                                 });
                               } on FirebaseAuthException catch (e) {
                                 Fluttertoast.showToast(
@@ -188,5 +190,21 @@ class _RegisterpageState extends State<Registerpage> {
             ),
           );
         });
+  }
+}
+
+Future<void> saveUserInfoToFirestore(User user) async {
+  final userDoc = FirebaseFirestore.instance.collection("Users").doc(user.uid);
+
+  final docSnapshot = await userDoc.get();
+  if (!docSnapshot.exists) {
+    await userDoc.set({
+      'email': user.email,
+      'uid': user.uid,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+    print("✅ Saved user to Firestore");
+  } else {
+    print("ℹ️ User already exists in Firestore");
   }
 }

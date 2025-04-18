@@ -30,7 +30,7 @@ class WelcomePage extends StatelessWidget {
                 Navigator.pushNamed(context, loginpageRoute);
               },
               child: Container(
-                color: Colors.red,
+                color: Colors.blue[900],
                 child: const Center(
                   child: Text(
                     'LOG IN',
@@ -54,7 +54,7 @@ class WelcomePage extends StatelessWidget {
                 Navigator.pushNamed(context, registerpageRoute);
               },
               child: Container(
-                color: Colors.blue,
+                color: Colors.blue[400],
                 child: const Center(
                   child: Text(
                     'Register',

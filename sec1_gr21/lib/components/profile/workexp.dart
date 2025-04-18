@@ -8,15 +8,6 @@ class Workexp extends StatelessWidget {
     {'title': 'เขียนโปรแกรม', 'duration': '3 ปี'},
     {'title': 'ออกแบบกราฟิก', 'duration': '2 ปี'},
     {'title': 'ตัดต่อวิดีโอ', 'duration': '1 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '5 ปี'},
   ]; //add firebase
 
   Widget _buildJobExperienceCard(String title, String duration) {

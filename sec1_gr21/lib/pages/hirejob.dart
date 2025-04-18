@@ -159,11 +159,51 @@ class _HireJobPageState extends State<HireJobPage> {
                                         ],
                                       ),
                                     ),
-                                    const Icon(
-                                      Icons.account_circle,
-                                      size: 100,
-                                      color: Colors.black54,
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 8),
+                                        const CircleAvatar(
+                                          radius: 40,
+                                          backgroundColor: Colors.grey,
+                                          child: Icon(Icons.account_circle,
+                                              size: 50, color: Colors.white),
+                                        ),
+                                        FutureBuilder<DocumentSnapshot>(
+                                            future: FirebaseFirestore.instance
+                                                .collection("Users")
+                                                .doc(data[
+                                                    'userId']) // Using the userId from the post
+                                                .get(),
+                                            builder:
+                                                (context, creatorSnapshot) {
+                                              if (creatorSnapshot
+                                                      .connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return const Text(
+                                                    "กำลังโหลดข้อมูลผู้สร้าง...");
+                                              }
+                                              if (creatorSnapshot.hasError) {
+                                                return const Text(
+                                                    "ไม่สามารถโหลดข้อมูลผู้สร้างได้");
+                                              }
+                                              final creatorData =
+                                                  creatorSnapshot.data?.data()
+                                                      as Map<String, dynamic>?;
+                                              final creatorName =
+                                                  creatorData?['name'] ??
+                                                      'Unknown';
+
+                                              return Column(children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text("ผู้สร้าง: $creatorName")
+                                              ]);
+                                            }),
+                                        // Space between avatar and name
+                                      ],
                                     ),
+                                    // Creator info - Display the user who created the post
                                   ],
                                 ),
                                 const SizedBox(height: 12),
@@ -175,7 +215,14 @@ class _HireJobPageState extends State<HireJobPage> {
                                       foregroundColor: Colors.white,
                                     ),
                                     onPressed: () {
-                                      // ติดต่อ
+                                      // ติดต่อ รอสร้างหน้าใหม่
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (context) => ContactPage(
+                                      //         userId: data['userId']),
+                                      //   ),
+                                      // );
                                     },
                                     child: const Text("ติดต่อ"),
                                   ),

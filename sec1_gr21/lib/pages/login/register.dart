@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:sec1_gr21/model/profile.dart';
+import 'package:sec1_gr21/model/profile/profile.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -102,6 +102,37 @@ class _RegisterpageState extends State<Registerpage> {
                       const SizedBox(height: 20),
                       TextFormField(
                         validator: RequiredValidator(
+                            errorText: "Please enter your name"),
+                        onSaved: (name) {
+                          profile.name = name;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: Icon(Icons.person),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        validator: RequiredValidator(
+                            errorText: "Please enter your age"),
+                        keyboardType: TextInputType.number,
+                        onSaved: (age) {
+                          profile.age = int.tryParse(age!);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Age',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          prefixIcon: Icon(Icons.calendar_today),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      TextFormField(
+                        validator: RequiredValidator(
                             errorText: "Please enter your password"),
                         controller: passwordController,
                         obscureText: true,
@@ -156,7 +187,8 @@ class _RegisterpageState extends State<Registerpage> {
                                         email: profile.email!,
                                         password: profile.password!)
                                     .then((value) async {
-                                  await saveUserInfoToFirestore(value.user!);
+                                  await saveUserInfoToFirestore(
+                                      value.user!, profile.name!, profile.age!);
                                   formKey.currentState!.reset();
                                   Fluttertoast.showToast(
                                       msg: "Create Successfully",
@@ -193,7 +225,7 @@ class _RegisterpageState extends State<Registerpage> {
   }
 }
 
-Future<void> saveUserInfoToFirestore(User user) async {
+Future<void> saveUserInfoToFirestore(User user, String name, int age) async {
   final userDoc = FirebaseFirestore.instance.collection("Users").doc(user.uid);
 
   final docSnapshot = await userDoc.get();
@@ -201,6 +233,8 @@ Future<void> saveUserInfoToFirestore(User user) async {
     await userDoc.set({
       'email': user.email,
       'uid': user.uid,
+      'name': name,
+      'age': age,
       'createdAt': FieldValue.serverTimestamp(),
     });
     print("✅ Saved user to Firestore");

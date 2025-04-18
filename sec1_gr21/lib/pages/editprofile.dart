@@ -1,11 +1,89 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sec1_gr21/components/appbar.dart';
+import 'package:sec1_gr21/components/profile/profiletextfield.dart';
+import 'package:sec1_gr21/route/route_constant.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
   const EditProfilePage({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<EditProfilePage> createState() => _EditProfilePageState();
+}
+
+class _EditProfilePageState extends State<EditProfilePage> {
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final addressController = TextEditingController();
+  final phoneController = TextEditingController();
+  String? imageUrl;
+
+  Future<void> updateProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('Users').doc(user.uid).set(
+          {
+            'name': nameController.text,
+            'age': int.tryParse(ageController.text) ?? 0,
+            'address': addressController.text,
+            'phone': phoneController.text, //add in firebase
+          },
+          SetOptions(
+              merge:
+                  true)); //update only info that send not deleting the old one
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Profile updated!')),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserProfile();
+  }
+
+  Future<void> fetchUserProfile() async {
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.uid)
+          .get();
+      if (doc.exists) {
+        final data = doc.data();
+        imageUrl = data?['imageUrl'];
+
+        setState(() {
+          nameController.text = data?['name'] ?? '';
+          ageController.text = (data?['age'] ?? '').toString();
+          addressController.text = data?['address'] ?? '';
+          phoneController.text = data?['phone'] ?? '';
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    nameController.dispose();
+    ageController.dispose();
+    addressController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +94,8 @@ class EditProfilePage extends StatelessWidget {
         body: SingleChildScrollView(
           // padding: const EdgeInsets.all(20.0),
           padding: const EdgeInsetsDirectional.symmetric(),
-          child: Center(
+          child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,8 +104,13 @@ class EditProfilePage extends StatelessWidget {
                 Stack(
                   alignment: Alignment.centerRight,
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 70,
+                      backgroundImage:
+                          imageUrl != null ? NetworkImage(imageUrl!) : null,
+                      child: imageUrl == null
+                          ? const Icon(Icons.person, size: 60)
+                          : null,
                     ),
                     Positioned(
                       top: 0,
@@ -41,117 +125,26 @@ class EditProfilePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                    width: 270,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'ชื่อ',
-                      // textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                Container(
-                    width: 270,
-                    height: 45,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "ชื่อ",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(7),
-                        ),
-                      ),
-                    )),
-                const SizedBox(height: 10),
-                Container(
-                    width: 270,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Email',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                Container(
-                    width: 270,
-                    height: 45,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(7),
-                        ),
-                      ),
-                    )),
-                const SizedBox(height: 10),
-                Container(
-                    width: 270,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'เบอร์โทรศัพท์',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                Container(
-                    width: 270,
-                    height: 45,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "เบอร์โทรศัพท์",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(7),
-                        ),
-                      ),
-                    )),
-                const SizedBox(height: 10),
-                Container(
-                    width: 270,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Username',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                Container(
-                    width: 270,
-                    height: 50,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        // label: Text('Username'),
-                        hintText: "Username",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(7),
-                        ),
-                      ),
-                    )),
-                const SizedBox(height: 10),
-                Container(
-                    width: 270,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Password',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
-                Container(
-                    width: 270,
-                    height: 50,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "password",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(7),
-                        ),
-                      ),
-                    )),
+                ProfileTextField(
+                  label: 'Name: ',
+                  hint: 'Name',
+                  controller: nameController,
+                ),
+                ProfileTextField(
+                  label: 'Age: ',
+                  hint: 'age',
+                  controller: ageController,
+                ),
+                ProfileTextField(
+                  label: 'Address: ',
+                  hint: 'address',
+                  controller: addressController,
+                ),
+                ProfileTextField(
+                  label: 'Phone number: ',
+                  hint: 'เบอร์โทรศัพท์',
+                  controller: phoneController,
+                ),
                 const SizedBox(height: 20),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   ElevatedButton(
@@ -162,7 +155,8 @@ class EditProfilePage extends StatelessWidget {
                           EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     ),
                     onPressed: () {
-                      // Navigator.pushNamed(context, null);
+                      updateProfile();
+                      Navigator.pushReplacementNamed(context, profilepageRoute);
                     },
                     child: Text(
                       "Save",
@@ -179,7 +173,7 @@ class EditProfilePage extends StatelessWidget {
                           EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     ),
                     onPressed: () {
-                      // Navigator.pushNamed(context, null);
+                      Navigator.pushReplacementNamed(context, profilepageRoute);
                     },
                     child: Text(
                       "Cancel",

@@ -150,3 +150,161 @@ class _HireJobPageState extends State<HireJobPage> {
     );
   }
 }
+
+// Future openDialog(BuildContext context) => showDialog(
+//       context: context,
+//       builder: (context) => AlertDialog(
+//         title: Text(
+//           'หางาน',
+
+//           // textAlign: TextAlign.start,
+
+//           style: TextStyle(
+//             fontSize: 35,
+//             fontWeight: FontWeight.bold,
+//           ),
+//         ),
+//         content: SingleChildScrollView(
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               Container(
+//                   width: 270,
+//                   alignment: Alignment.centerLeft,
+//                   child: Text(
+//                     'งานที่ต้องการทำ',
+
+//                     // textAlign: TextAlign.start,
+
+//                     style: TextStyle(
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   )),
+//               Container(
+//                   width: 270,
+//                   height: 45,
+//                   child: TextField(
+//                     decoration: InputDecoration(
+//                       hintText: "งานที่ต้องการทำ",
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(7),
+//                       ),
+//                     ),
+//                   )),
+//               const SizedBox(height: 10),
+//               Container(
+//                   width: 270,
+//                   alignment: Alignment.centerLeft,
+//                   child: Text(
+//                     'ชื่อ',
+
+//                     // textAlign: TextAlign.start,
+
+//                     style: TextStyle(
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   )),
+//               Container(
+//                   width: 270,
+//                   height: 45,
+//                   child: TextField(
+//                     decoration: InputDecoration(
+//                       hintText: "ชื่อ",
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(7),
+//                       ),
+//                     ),
+//                   )),
+//               const SizedBox(height: 10),
+//               Container(
+//                   width: 270,
+//                   alignment: Alignment.centerLeft,
+//                   child: Text(
+//                     'อายุ',
+
+//                     // textAlign: TextAlign.start,
+
+//                     style: TextStyle(
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   )),
+//               Container(
+//                   width: 270,
+//                   height: 45,
+//                   child: TextField(
+//                     keyboardType:
+//                         TextInputType.number, // 📱 แสดงคีย์บอร์ดตัวเลข
+
+//                     decoration: InputDecoration(
+//                       hintText: "อายุ",
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(7),
+//                       ),
+//                     ),
+//                   )),
+//               const SizedBox(height: 10),
+//               Container(
+//                   width: 270,
+//                   alignment: Alignment.centerLeft,
+//                   child: Text(
+//                     'ที่อยู่',
+
+//                     // textAlign: TextAlign.start,
+
+//                     style: TextStyle(
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   )),
+//               Container(
+//                   width: 270,
+//                   height: 45,
+//                   child: TextField(
+//                     decoration: InputDecoration(
+//                       hintText: "ที่อยู่",
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(7),
+//                       ),
+//                     ),
+//                   )),
+//               const SizedBox(height: 10),
+//               Container(
+//                   width: 270,
+//                   alignment: Alignment.centerLeft,
+//                   child: Text(
+//                     'รายละเอียดเพิ่มเติม',
+
+//                     // textAlign: TextAlign.start,
+
+//                     style: TextStyle(
+//                       fontSize: 20,
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   )),
+//               Container(
+//                   width: 270,
+//                   height: 45,
+//                   child: TextField(
+//                     decoration: InputDecoration(
+//                       hintText: "รายละเอียดเพิ่มเติม",
+//                       border: OutlineInputBorder(
+//                         borderRadius: BorderRadius.circular(7),
+//                       ),
+//                     ),
+//                   )),
+//             ],
+//           ),
+//         ),
+//         contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+//         actions: [
+//           TextButton(onPressed: () {}, child: Text('ส่ง')),
+//           TextButton(
+//             onPressed: () => Navigator.of(context).pop(),
+//             child: Text('ยกเลิก'),
+//           ),
+//         ],
+//       ),
+//     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sec1_gr21/components/appbar.dart';
-import 'package:sec1_gr21/components/opendialog.dart';
+
 import 'package:sec1_gr21/model/jobitem.dart';
 
 class FindJobPage extends StatefulWidget {
@@ -126,3 +126,158 @@ class _FindJobPageState extends State<FindJobPage> {
     );
   }
 }
+
+Future openDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'เพิ่มงาน',
+
+          // textAlign: TextAlign.start,
+
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                  width: 270,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'ชื่องาน',
+
+                    // textAlign: TextAlign.start,
+
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              Container(
+                  width: 270,
+                  height: 45,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "ชื่องาน",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                    ),
+                  )),
+              const SizedBox(height: 10),
+              Container(
+                  width: 270,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'ชื่องาน',
+
+                    // textAlign: TextAlign.start,
+
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              Container(
+                  width: 270,
+                  height: 45,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "ชื่อผู้จ้าง",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                    ),
+                  )),
+              const SizedBox(height: 10),
+              Container(
+                  width: 270,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'ชื่อผู้จ้าง',
+
+                    // textAlign: TextAlign.start,
+
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              Container(
+                  width: 270,
+                  height: 45,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "ชื่อผู้จ้าง",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                    ),
+                  )),
+              const SizedBox(height: 10),
+              Container(
+                  width: 270,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'สถานที่ทำงาน',
+
+                    // textAlign: TextAlign.start,
+
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              Container(
+                  width: 270,
+                  height: 45,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "สถานที่ทำงาน",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                    ),
+                  )),
+              const SizedBox(height: 10),
+              Container(
+                  width: 270,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'รายละเอียดเพิ่มเติม',
+
+                    // textAlign: TextAlign.start,
+
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+              Container(
+                  width: 270,
+                  height: 45,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "รายละเอียดเพิ่มเติม",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        actions: [
+          TextButton(onPressed: () {}, child: Text('ส่ง')),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('ยกเลิก'),
+          ),
+        ],
+      ),
+    );

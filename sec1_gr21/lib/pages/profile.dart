@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/profile/workexp.dart';
 import 'package:sec1_gr21/components/profile/profilename.dart';
+import 'package:sec1_gr21/util/storage_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({
@@ -15,6 +17,36 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   fetchImages();
+  // }
+
+  // Future<void> fetchImages() async {
+  //   await Provider.of<StorageService>(context, listen: false).fetchImages();
+  // }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Consumer<StorageService>(
+  //     builder: (context, storageService, child) {
+  //       final List<String> imageUrls = storageService.imageUrls;
+
+  //       return Scaffold(
+  //           floatingActionButton: FloatingActionButton(
+  //             onPressed: () => storageService.uploadImage(),
+  //             child: const Icon(Icons.add),
+  //           ),
+  //           body: ListView.builder(itemBuilder: (context, index) {
+  //             final String imageUrl = imageUrls[index];
+  //             return Image.network(imageUrl);
+  //           }));
+  //     },
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +72,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       icon: const Icon(Icons.edit, color: Colors.grey),
                       iconSize: 32,
                       onPressed: () {
-                        Navigator.pushNamed(context, editprofilepageRoute);
+                        Navigator.pushReplacementNamed(
+                            context, editprofilepageRoute);
                       },
                     ),
                   ),

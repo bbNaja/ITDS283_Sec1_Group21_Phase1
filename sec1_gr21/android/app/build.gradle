@@ -8,8 +8,8 @@ plugins {
 
 android {
     namespace = "com.example.sec1_gr21"
-    // compileSdk = 34
-    compileSdk = 35
+     compileSdk = 34
+    //compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

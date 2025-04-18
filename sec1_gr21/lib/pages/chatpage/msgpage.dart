@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sec1_gr21/components/appbar.dart';
+
 import 'package:sec1_gr21/components/chat/chatbubble.dart';
 import 'package:sec1_gr21/util/chat/chat_service.dart';
 

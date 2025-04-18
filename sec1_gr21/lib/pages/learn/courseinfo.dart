@@ -86,7 +86,10 @@ class _CourseinfoState extends State<CourseinfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: NavBar(),
+        appBar: AppBar(
+          title: Text('Course Info'),
+          backgroundColor: Color(0xFF6985e8),
+        ),
         body: SafeArea(
             child: Container(
           decoration: BoxDecoration(

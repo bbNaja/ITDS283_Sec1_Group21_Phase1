@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sec1_gr21/util/mappicker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,10 +9,11 @@ import 'dart:convert';
 Future<Map<String, dynamic>?> openDialog(BuildContext context) async {
   final TextEditingController worknameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
+  final TextEditingController salaryController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController additionController = TextEditingController();
   LatLng? selectedLatLng;
+  String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
   return showDialog<Map<String, dynamic>>(
     context: context,
     builder: (context) => AlertDialog(
@@ -23,7 +25,7 @@ Future<Map<String, dynamic>?> openDialog(BuildContext context) async {
           children: [
             buildTextField("งานที่ต้องการจ้าง", worknameController),
             buildTextField("ชื่อ", nameController),
-            buildTextField("อายุ", ageController, isNumber: true),
+            buildTextField("ค่าจ้าง", salaryController, isNumber: true),
             Container(
               width: 270,
               margin: EdgeInsets.only(top: 10),
@@ -75,13 +77,14 @@ Future<Map<String, dynamic>?> openDialog(BuildContext context) async {
               Navigator.of(context).pop({
                 'workname': worknameController.text,
                 'name': nameController.text,
-                'age': int.tryParse(ageController.text) ?? 0,
+                'salary': int.tryParse(salaryController.text) ?? 0,
                 'location': selectedLatLng != null
                     ? GeoPoint(
                         selectedLatLng!.latitude, selectedLatLng!.longitude)
                     : null,
                 'locationName': locationController.text,
                 'addition': additionController.text,
+                'userId': currentUserId,
               });
             },
             child: const Text("ส่ง")),

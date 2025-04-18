@@ -127,7 +127,8 @@ class _HireJobPageState extends State<HireJobPage> {
                                           ),
                                           const SizedBox(height: 4),
                                           Text("ชื่อ: ${data['name'] ?? ''}"),
-                                          Text("อายุ: ${data['age'] ?? ''}"),
+                                          Text(
+                                              "ค่าจ้าง: ${data['salary'] ?? ''}"),
                                           if (data['location'] != null)
                                             FutureBuilder<String?>(
                                               future: getAddressFromLatLng(

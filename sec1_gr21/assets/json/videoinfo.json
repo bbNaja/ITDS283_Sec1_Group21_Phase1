@@ -1,26 +1,26 @@
 [
   {
-    "title": "Squat and Walk",
+    "title": "Lesson 1 : Preparing",
     "time": "45 seconds",
-    "thumbnail": "assets/squat1.jpg",
+    "thumbnail": "assets/Knitting1.jpg",
     "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4"
   },
   {
-    "title": "Plie Squat and Heel Raises",
+    "title": "Lesson 2 : Understanding Concept",
     "time": "55 seconds",
-    "thumbnail": "assets/squat2.jpg",
+    "thumbnail": "assets/Knitting2.jpg",
     "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"
   },
   {
-    "title": "Squat Kickback",
+    "title": "Lesson 3 : Working on",
     "time": "60 seconds",
-    "thumbnail": "assets/squat3.jpg",
+    "thumbnail": "assets/Knitting3.jpg",
     "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"
   },
   {
-    "title": "Squat with Side Leg Lift",
+    "title": "Lesson 4: Finishing job",
     "time": "120 seconds",
-    "thumbnail": "assets/squat4.jpg",
+    "thumbnail": "assets/Knitting4.jpg",
     "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"
   }
 

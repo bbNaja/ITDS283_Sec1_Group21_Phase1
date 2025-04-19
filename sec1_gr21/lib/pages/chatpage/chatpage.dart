@@ -55,7 +55,7 @@ class _ChatPageState extends State<ChatPage> {
       BuildContext context) {
     String userName = userData["name"]?.isNotEmpty == true
         ? userData["name"]
-        : userData["email"] ?? "Unknown";
+        : userData["email"] ?? "Guest";
     // Default to "Unknown" if null
     String userId = userData["uid"] ?? ""; // Default to empty string if null
 

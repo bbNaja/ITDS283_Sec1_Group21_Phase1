@@ -179,7 +179,7 @@ class _CourseinfoState extends State<CourseinfoPage> {
                   children: [
                     SizedBox(height: 30),
                     SizedBox(width: 30),
-                    Text('Circuit 1 ',
+                    Text('Track 1 ',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

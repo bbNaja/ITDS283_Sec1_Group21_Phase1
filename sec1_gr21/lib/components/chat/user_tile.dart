@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
   final String text;
+  // final String subtitle;
   final void Function()? onTap;
 
-  const UserTile({super.key, required this.text, required this.onTap});
+  const UserTile({
+    super.key,
+    required this.text,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,19 @@ class UserTile extends StatelessWidget {
             const SizedBox(
               width: 20,
             ),
-            Text(text),
+            Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  Text(
+                    text,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                      height: 5), // Spacing between name and message preview
+                ]))
           ],
         ),
       ),

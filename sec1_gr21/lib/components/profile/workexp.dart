@@ -105,7 +105,7 @@ class Workexp extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         // Button to open a dialog and add new experience
-        if (userId == currentUserId)
+        if (userId == null)
           ElevatedButton(
             onPressed: () async {
               await showDialog(

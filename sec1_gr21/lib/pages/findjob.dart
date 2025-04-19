@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sec1_gr21/components/appbar.dart';
 
 import 'package:sec1_gr21/model/jobitem.dart';
+import 'package:sec1_gr21/components/opendialogfindjob.dart';
+import 'package:sec1_gr21/pages/contactpage.dart';
 
 class FindJobPage extends StatefulWidget {
   const FindJobPage({Key? key}) : super(key: key);
@@ -11,273 +14,216 @@ class FindJobPage extends StatefulWidget {
 }
 
 class _FindJobPageState extends State<FindJobPage> {
-  final List<findjobItem> Forfindjob = [
-    findjobItem("ศิลปะ", "david", "เพิ่มเติม", "test"),
-    findjobItem("งานฝีมือ", "david", "ถักไหมพรม", "test"),
-    findjobItem("test", "david", "เพิ่มเติม", "test"),
-    findjobItem("test", "david", "เพิ่มเติม", "test"),
-  ];
   String searchText = "";
   @override
   Widget build(BuildContext context) {
-    List<findjobItem> filteredJobs = Forfindjob.where((item) =>
-        item.workname.contains(searchText) ||
-        item.name.contains(searchText)).toList();
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: NavBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // หัวข้อ + ปุ่มเพิ่ม
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'หางาน',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title + Add Button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'จ้างงาน',
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
                   ),
-                  IconButton(
-                    icon: const Icon(Icons
-                        .add_circle_outline), // กดปุ่มเพิ่มเพื่อให้ไปเพิ่มใน list ข้างบน
-                    iconSize: 32,
-                    onPressed: () {
-                      // เพิ่มงานใหม่
-                      openDialog(context);
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-
-              // Search box
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    searchText = value;
-                  });
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  prefixIcon: const Icon(Icons.search),
                 ),
+                IconButton(
+                  icon: const Icon(Icons.add_circle_outline),
+                  iconSize: 32,
+                  onPressed: () async {
+                    final result = await openDialogfindjob(context);
+                    if (result != null) {
+                      FirebaseFirestore.instance
+                          .collection("findjobs")
+                          .add(result);
+                    }
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // Search Field
+            TextField(
+              onChanged: (value) {
+                setState(() {
+                  searchText = value;
+                });
+              },
+              decoration: InputDecoration(
+                hintText: 'Search',
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                prefixIcon: const Icon(Icons.search),
               ),
-              const SizedBox(height: 20),
-              ...filteredJobs.map((item) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${item.workname}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+            ),
+            const SizedBox(height: 20),
+            // 🔥 ดึงข้อมูลจาก Firebase แบบ Real-time
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection("findjobs")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError)
+                    return Text("Error: ${snapshot.error}");
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  final docs = snapshot.data!.docs;
+                  final filteredJobs = docs.where((doc) {
+                    final data = doc.data() as Map<String, dynamic>;
+                    final workname = data['workname'] ?? '';
+                    final name = data['name'] ?? '';
+                    return workname.contains(searchText) || //search
+                        name.contains(searchText);
+                  }).toList();
+
+                  return ListView.builder(
+                    itemCount: filteredJobs.length,
+                    itemBuilder: (context, index) {
+                      final data =
+                          filteredJobs[index].data() as Map<String, dynamic>;
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Card(
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Left: Job info
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${data['workname'] ?? ''}",
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text("ชื่อ: ${data['name'] ?? ''}"),
+                                          Text(
+                                            "รูปแบบงาน: ${data['worktype'] == 'hourly' ? 'รายชั่วโมง' : 'รับเป็นงาน'}",
+                                          ),
+                                          if (data['worktype'] == 'hourly' &&
+                                              data['minwage'] != null)
+                                            Text(
+                                                "รายได้ขั้นต่ำต่อชม: ${data['minwage']} บาท"),
+                                          Text(
+                                              "รายละเอียดเพิ่มเติม: ${data['addition'] ?? ''}"),
+                                        ],
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        const SizedBox(height: 8),
+                                        const CircleAvatar(
+                                          radius: 40,
+                                          backgroundColor: Colors.grey,
+                                          child: Icon(Icons.account_circle,
+                                              size: 50, color: Colors.white),
+                                        ),
+                                        FutureBuilder<DocumentSnapshot>(
+                                            future: FirebaseFirestore.instance
+                                                .collection("Users")
+                                                .doc(data[
+                                                    'userId']) // Using the userId from the post
+                                                .get(),
+                                            builder:
+                                                (context, creatorSnapshot) {
+                                              if (creatorSnapshot
+                                                      .connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return const Text(
+                                                    "กำลังโหลดข้อมูลผู้สร้าง...");
+                                              }
+                                              if (creatorSnapshot.hasError) {
+                                                return const Text(
+                                                    "ไม่สามารถโหลดข้อมูลผู้สร้างได้");
+                                              }
+                                              final creatorData =
+                                                  creatorSnapshot.data?.data()
+                                                      as Map<String, dynamic>?;
+                                              final creatorName =
+                                                  creatorData?['name'] ??
+                                                      'Unknown';
+
+                                              return Column(children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text("ผู้สร้าง: $creatorName")
+                                              ]);
+                                            }),
+                                        // Space between avatar and name
+                                      ],
+                                    ),
+                                    // Creator info - Display the user who created the post
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green,
+                                      foregroundColor: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // ติดต่อ รอสร้างหน้าใหม่
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Contactpage(
+                                            userId: data[
+                                                'userId'], // Pass the userId of the job poster
+                                            userName: data[
+                                                'name'], // Pass the name of the job poster
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text("ติดต่อ"),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Text("ชื่อผู้จ้าง: ${item.name}"),
-                          Text("ที่ทำงาน: ${item.location}"),
-                          Text("เพิ่มเติม: ${item.addition}"),
-                          const SizedBox(height: 8),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                foregroundColor: Colors.white,
-                              ),
-                              onPressed: () {
-                                // กดสนใจ
-                              },
-                              child: const Text("สนใจ"),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ],
-          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-Future openDialog(BuildContext context) => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          'เพิ่มงาน',
-
-          // textAlign: TextAlign.start,
-
-          style: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                  width: 270,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'ชื่องาน',
-
-                    // textAlign: TextAlign.start,
-
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-              Container(
-                  width: 270,
-                  height: 45,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "ชื่องาน",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                    ),
-                  )),
-              const SizedBox(height: 10),
-              Container(
-                  width: 270,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'ชื่องาน',
-
-                    // textAlign: TextAlign.start,
-
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-              Container(
-                  width: 270,
-                  height: 45,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "ชื่อผู้จ้าง",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                    ),
-                  )),
-              const SizedBox(height: 10),
-              Container(
-                  width: 270,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'ชื่อผู้จ้าง',
-
-                    // textAlign: TextAlign.start,
-
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-              Container(
-                  width: 270,
-                  height: 45,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "ชื่อผู้จ้าง",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                    ),
-                  )),
-              const SizedBox(height: 10),
-              Container(
-                  width: 270,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'สถานที่ทำงาน',
-
-                    // textAlign: TextAlign.start,
-
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-              Container(
-                  width: 270,
-                  height: 45,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "สถานที่ทำงาน",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                    ),
-                  )),
-              const SizedBox(height: 10),
-              Container(
-                  width: 270,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'รายละเอียดเพิ่มเติม',
-
-                    // textAlign: TextAlign.start,
-
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-              Container(
-                  width: 270,
-                  height: 45,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "รายละเอียดเพิ่มเติม",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                    ),
-                  )),
-            ],
-          ),
-        ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        actions: [
-          TextButton(onPressed: () {}, child: Text('ส่ง')),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('ยกเลิก'),
-          ),
-        ],
-      ),
-    );

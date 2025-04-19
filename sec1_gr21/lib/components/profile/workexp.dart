@@ -1,14 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Workexp extends StatelessWidget {
   Workexp({super.key});
 
-  final List<Map<String, String>> jobExperiences = [
-    {'title': 'ศิลป/วาดภาพ', 'duration': '4 ปี'},
-    {'title': 'เขียนโปรแกรม', 'duration': '3 ปี'},
-    {'title': 'ออกแบบกราฟิก', 'duration': '2 ปี'},
-    {'title': 'ตัดต่อวิดีโอ', 'duration': '1 ปี'},
-  ]; //add firebase
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _durationController = TextEditingController();
+  // Function to add a new job experience
+  Future<void> _addJobExperience(context) async {
+    final title = _titleController.text.trim();
+
+    if (title.isNotEmpty) {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(user.uid)
+            .collection('job_experiences')
+            .add({
+          'title': _titleController.text,
+          'duration': _durationController.text,
+        });
+
+        _titleController.clear();
+        _durationController.clear();
+      } else {
+        const SnackBar(content: Text('Please fill in both fields'));
+      }
+    }
+  }
 
   Widget _buildJobExperienceCard(String title, String duration) {
     return Container(
@@ -46,15 +68,83 @@ class Workexp extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        ...List.generate(jobExperiences.length, (index) {
-          final job = jobExperiences[index];
-          return Column(
-            children: [
-              _buildJobExperienceCard(job['title']!, job['duration']!),
-              const SizedBox(height: 10),
-            ],
-          );
-        }),
+        // StreamBuilder to listen for real-time changes in job experiences
+        StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('Users')
+              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .collection('job_experiences')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.hasError) {
+              return const Text('Error loading job experiences');
+            }
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return const Text('No job experiences added.');
+            }
+
+            final jobExperiences = snapshot.data!.docs;
+            return Column(
+              children: jobExperiences.map((doc) {
+                final job = doc.data() as Map<String, dynamic>;
+                return Column(
+                  children: [
+                    _buildJobExperienceCard(job['title'], job['duration']),
+                    const SizedBox(height: 10),
+                  ],
+                );
+              }).toList(),
+            );
+          },
+        ),
+        const SizedBox(height: 20),
+        // Button to open a dialog and add new experience
+        ElevatedButton(
+          onPressed: () async {
+            await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Add Job Experience'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: _titleController,
+                        decoration:
+                            const InputDecoration(labelText: 'Job Title'),
+                      ),
+                      TextField(
+                        controller: _durationController,
+                        decoration:
+                            const InputDecoration(labelText: 'Duration'),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _addJobExperience(context);
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Add'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          child: const Text('Add Experience'),
+        )
       ],
     );
   }

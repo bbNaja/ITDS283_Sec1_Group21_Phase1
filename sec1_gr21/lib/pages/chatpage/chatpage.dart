@@ -83,25 +83,4 @@ class _ChatPageState extends State<ChatPage> {
       return const SizedBox(); // Empty widget if current user
     }
   }
-
-  // Widget _buildUserListItem(
-  //     Map<String, dynamic> userData, BuildContext context) {
-
-  //   if (userData['email'] != FirebaseAuth.instance.currentUser?.email) {
-  //     return UserTile(
-  //       text: userData["email"],
-  //       onTap: () {
-  //         Navigator.push(
-  //             context,
-  //             MaterialPageRoute(
-  //                 builder: (context) => Msgpage(
-  //                       recieverEmail: userData['email'],
-  //                       recieverID: userData['uid'],
-  //                     )));
-  //       },
-  //     );
-  //   } else {
-  //     return Container();
-  //   }
-  // }
 }

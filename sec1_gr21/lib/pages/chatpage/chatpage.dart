@@ -29,6 +29,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _buildUserList() {
+    //List User
     return StreamBuilder(
         stream: _chatService.getUsersStream(),
         builder: (context, snapshot) {
@@ -38,6 +39,7 @@ class _ChatPageState extends State<ChatPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text("Loading ...");
           }
+
           return ListView(
             children: snapshot.data!
                 .map<Widget>(
@@ -45,27 +47,61 @@ class _ChatPageState extends State<ChatPage> {
                 .toList(),
           );
         });
-
-    //build individual list tile for use
   }
 
   Widget _buildUserListItem(
-      Map<String, dynamic> userData, BuildContext context) {
-    if (userData['email'] != FirebaseAuth.instance.currentUser?.email) {
+      //build individual list tile for use
+      Map<String, dynamic> userData,
+      BuildContext context) {
+    String userName = userData["name"]?.isNotEmpty == true
+        ? userData["name"]
+        : userData["email"] ?? "Unknown";
+    // Default to "Unknown" if null
+    String userId = userData["uid"] ?? ""; // Default to empty string if null
+
+    if (userName != FirebaseAuth.instance.currentUser?.email) {
+      //not myself
       return UserTile(
-        text: userData["email"],
+        text: userName,
         onTap: () {
-          Navigator.push(
+          if (userId.isNotEmpty) {
+            // Make sure the userId is not empty before navigating
+            Navigator.push(
+              //push into msg page individual profile
               context,
               MaterialPageRoute(
-                  builder: (context) => Msgpage(
-                        recieverEmail: userData['email'],
-                        recieverID: userData['uid'],
-                      )));
+                builder: (context) => Msgpage(
+                  recieverEmail: userName,
+                  recieverID: userId,
+                ),
+              ),
+            );
+          }
         },
       );
     } else {
-      return Container();
+      return const SizedBox(); // Empty widget if current user
     }
   }
+
+  // Widget _buildUserListItem(
+  //     Map<String, dynamic> userData, BuildContext context) {
+
+  //   if (userData['email'] != FirebaseAuth.instance.currentUser?.email) {
+  //     return UserTile(
+  //       text: userData["email"],
+  //       onTap: () {
+  //         Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //                 builder: (context) => Msgpage(
+  //                       recieverEmail: userData['email'],
+  //                       recieverID: userData['uid'],
+  //                     )));
+  //       },
+  //     );
+  //   } else {
+  //     return Container();
+  //   }
+  // }
 }

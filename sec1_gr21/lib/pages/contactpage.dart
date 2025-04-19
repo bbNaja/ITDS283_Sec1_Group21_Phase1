@@ -1,22 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sec1_gr21/pages/chatpage/msgpage.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/profile/workexp.dart';
 import 'package:sec1_gr21/components/profile/profilename.dart';
 import 'package:sec1_gr21/util/storage_service.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({
+class Contactpage extends StatefulWidget {
+  final String userId;
+  final String userName;
+
+  const Contactpage({
     Key? key,
+    required this.userId, // Add the required parameter for userId
+    required this.userName, // Add the required parameter for userName
   }) : super(key: key);
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<Contactpage> createState() => _ContactPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ContactPageState extends State<Contactpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,34 +41,34 @@ class _ProfilePageState extends State<ProfilePage> {
                   const CircleAvatar(
                     radius: 70,
                   ),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.grey),
-                      iconSize: 32,
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(
-                            context, editprofilepageRoute);
-                      },
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(height: 20),
               Center(
                 child: TextButton.icon(
                     onPressed: () {
-                      Navigator.pushNamed(context, editprofilepageRoute);
+                      if (widget.userId.isNotEmpty) {
+                        // Make sure the userId is not empty before navigating
+                        Navigator.push(
+                          //push into msg page individual profile
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Msgpage(
+                              recieverEmail: widget.userName,
+                              recieverID: widget.userId,
+                            ),
+                          ),
+                        );
+                      }
                     },
-                    icon: const Icon(Icons.edit, color: Colors.black),
+                    icon: const Icon(Icons.chat, color: Colors.black),
                     label: const Text(
-                      'Edit',
+                      'Chat',
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     )),
               ),
               const SizedBox(height: 20),
-              Container(child: Profilename()),
+              Container(child: Profilename(userId: widget.userId)),
               const SizedBox(height: 30),
               Container(child: Workexp()),
               const SizedBox(height: 40),

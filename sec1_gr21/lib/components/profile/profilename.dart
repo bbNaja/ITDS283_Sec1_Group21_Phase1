@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Profilename extends StatefulWidget {
-  const Profilename({super.key});
+  final String? userId;
+  final String? userName;
+  const Profilename({Key? key, this.userId, this.userName}) : super(key: key);
 
   @override
   State<Profilename> createState() => _ProfilenameState();
@@ -23,10 +25,11 @@ class _ProfilenameState extends State<Profilename> {
 
   Future<void> fetchProfile() async {
     final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
+    final targetuserId = widget.userId ?? user?.uid;
+    if (targetuserId != null) {
       final doc = await FirebaseFirestore.instance
           .collection('Users')
-          .doc(user.uid)
+          .doc(targetuserId)
           .get();
       if (doc.exists) {
         final data = doc.data();

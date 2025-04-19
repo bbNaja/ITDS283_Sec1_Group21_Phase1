@@ -4,6 +4,7 @@ import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/opendialog.dart';
 import 'package:sec1_gr21/model/hirejobitem.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sec1_gr21/pages/contactpage.dart';
 
 class HireJobPage extends StatefulWidget {
   const HireJobPage({Key? key}) : super(key: key);
@@ -216,13 +217,17 @@ class _HireJobPageState extends State<HireJobPage> {
                                     ),
                                     onPressed: () {
                                       // ติดต่อ รอสร้างหน้าใหม่
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => ContactPage(
-                                      //         userId: data['userId']),
-                                      //   ),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Contactpage(
+                                            userId: data[
+                                                'userId'], // Pass the userId of the job poster
+                                            userName: data[
+                                                'name'], // Pass the name of the job poster
+                                          ),
+                                        ),
+                                      );
                                     },
                                     child: const Text("ติดต่อ"),
                                   ),

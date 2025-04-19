@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Workexp extends StatelessWidget {
-  Workexp({super.key});
+  final String? userId; // Accepting userId as a parameter
 
+  Workexp({super.key, this.userId});
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
   // Function to add a new job experience
@@ -14,10 +15,11 @@ class Workexp extends StatelessWidget {
 
     if (title.isNotEmpty) {
       final user = FirebaseAuth.instance.currentUser;
+      final targetUserId = userId ?? user?.uid;
       if (user != null) {
         await FirebaseFirestore.instance
             .collection('Users')
-            .doc(user.uid)
+            .doc(targetUserId)
             .collection('job_experiences')
             .add({
           'title': _titleController.text,
@@ -27,7 +29,7 @@ class Workexp extends StatelessWidget {
         _titleController.clear();
         _durationController.clear();
       } else {
-        const SnackBar(content: Text('Please fill in both fields'));
+        const SnackBar(content: Text('Please fill in title'));
       }
     }
   }
@@ -53,6 +55,7 @@ class Workexp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUserId = FirebaseAuth.instance.currentUser?.uid;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -72,7 +75,7 @@ class Workexp extends StatelessWidget {
         StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('Users')
-              .doc(FirebaseAuth.instance.currentUser?.uid)
+              .doc(userId ?? currentUserId)
               .collection('job_experiences')
               .snapshots(),
           builder: (context, snapshot) {
@@ -102,49 +105,50 @@ class Workexp extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         // Button to open a dialog and add new experience
-        ElevatedButton(
-          onPressed: () async {
-            await showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text('Add Job Experience'),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextField(
-                        controller: _titleController,
-                        decoration:
-                            const InputDecoration(labelText: 'Job Title'),
+        if (userId == currentUserId)
+          ElevatedButton(
+            onPressed: () async {
+              await showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Add Job Experience'),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextField(
+                          controller: _titleController,
+                          decoration:
+                              const InputDecoration(labelText: 'Job Title'),
+                        ),
+                        TextField(
+                          controller: _durationController,
+                          decoration:
+                              const InputDecoration(labelText: 'Duration'),
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Cancel'),
                       ),
-                      TextField(
-                        controller: _durationController,
-                        decoration:
-                            const InputDecoration(labelText: 'Duration'),
+                      TextButton(
+                        onPressed: () {
+                          _addJobExperience(context);
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Add'),
                       ),
                     ],
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        _addJobExperience(context);
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Add'),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-          child: const Text('Add Experience'),
-        )
+                  );
+                },
+              );
+            },
+            child: const Text('Add Experience'),
+          )
       ],
     );
   }

@@ -70,7 +70,7 @@ class _ContactPageState extends State<Contactpage> {
               const SizedBox(height: 20),
               Container(child: Profilename(userId: widget.userId)),
               const SizedBox(height: 30),
-              Container(child: Workexp()),
+              Container(child: Workexp(userId: widget.userId)),
               const SizedBox(height: 40),
               Center(
                   child: TextButton.icon(

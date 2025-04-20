@@ -72,18 +72,6 @@ class _ContactPageState extends State<Contactpage> {
               const SizedBox(height: 30),
               Container(child: Workexp(userId: widget.userId)),
               const SizedBox(height: 40),
-              Center(
-                  child: TextButton.icon(
-                icon: const Icon(Icons.logout, color: Colors.red),
-                label: const Text(
-                  'Sign Out',
-                  style: TextStyle(color: Colors.red, fontSize: 16),
-                ),
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacementNamed(context, loginpageRoute);
-                },
-              ))
             ],
           ),
         ),

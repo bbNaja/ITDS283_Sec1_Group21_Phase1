@@ -30,7 +30,7 @@ class _FindJobPageState extends State<FindJobPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'จ้างงาน',
+                  'หางาน',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,

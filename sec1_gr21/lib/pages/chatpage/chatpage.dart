@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/chat/user_tile.dart';
 import 'package:sec1_gr21/pages/chatpage/msgpage.dart';
 import 'package:sec1_gr21/util/chat/chat_service.dart';

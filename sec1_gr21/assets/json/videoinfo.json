@@ -15,13 +15,13 @@
     "title": "Lesson 3 : Working on",
     "time": "60 seconds",
     "thumbnail": "assets/Knitting3.jpg",
-    "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"
+    "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/landscape.mp4"
   },
   {
     "title": "Lesson 4: Finishing job",
     "time": "120 seconds",
     "thumbnail": "assets/Knitting4.jpg",
-    "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"
+    "videoUrl": "https://flutter.github.io/assets-for-api-docs/assets/videos/lake.mp4"
   }
 
 ]

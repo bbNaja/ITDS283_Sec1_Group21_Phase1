@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sec1_gr21/theme/theme_manager.dart';
+
 import 'package:sec1_gr21/route/route_constant.dart';
 
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
@@ -26,12 +26,6 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
           : null,
       centerTitle: true,
       actions: [
-        // Switch(
-        //   value: themeManager.themeMode == ThemeMode.dark,
-        //   onChanged: (newValue) {
-        //     themeManager.toggleTheme(newValue);
-        //   },
-        // ),
         IconButton(
           icon: Icon(Icons.chat_bubble_outline, color: Colors.black),
           onPressed: () {

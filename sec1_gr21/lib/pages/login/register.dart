@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:sec1_gr21/model/profile/profile.dart';
+import 'package:sec1_gr21/model/profile.dart';
 import 'package:sec1_gr21/route/route_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

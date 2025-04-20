@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:sec1_gr21/route/route_constant.dart';
 import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/profile/workexp.dart';
 import 'package:sec1_gr21/components/profile/profilename.dart';
-import 'package:sec1_gr21/util/storage_service.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({

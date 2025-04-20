@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screen_exports.dart';
 import 'route_constant.dart';
-import 'package:sec1_gr21/theme/theme_manager.dart';
 
-final ThemeManager themeManager = ThemeManager();
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case welcomepageRoute:

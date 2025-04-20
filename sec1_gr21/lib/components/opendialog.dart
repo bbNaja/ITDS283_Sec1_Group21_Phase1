@@ -36,7 +36,7 @@ Future<Map<String, dynamic>?> openDialog(BuildContext context) async {
             ),
             Container(
               width: 270,
-              height: 45,
+              height: 90,
               child: TextField(
                 controller: locationController,
                 readOnly: true,
@@ -57,7 +57,7 @@ Future<Map<String, dynamic>?> openDialog(BuildContext context) async {
                   selectedLatLng = picked;
                   final address = await getAddressFromLatLng(picked);
                   if (address != null) {
-                    locationController.text = address; // 👈 ใส่ที่อยู่ในช่อง
+                    locationController.text = address;
                   }
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(
@@ -130,10 +130,10 @@ Widget buildTextField(String label, TextEditingController controller,
       ),
       Container(
         width: 270,
-        height: 45,
         child: TextField(
           controller: controller,
           keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+          maxLines: null,
           decoration: InputDecoration(
             hintText: label,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),

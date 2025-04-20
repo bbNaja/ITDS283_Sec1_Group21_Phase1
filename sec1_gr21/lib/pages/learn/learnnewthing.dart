@@ -9,16 +9,19 @@ class learnnewthingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Learn New Things'),
-        backgroundColor: Colors.grey,
+        title: const Text(
+          'Learn New Things',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.grey[400], // Match this color with the gradient
       ),
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xff0f17ad).withOpacity(0.8),
-                Color(0xFF6985e8).withOpacity(0.9),
+                Colors.grey.withOpacity(0.8), // Match appbar color with opacity
+                Colors.grey.withOpacity(0.9), // Slightly darker shade
               ],
               begin: const FractionalOffset(0.0, 0.4),
               end: Alignment.topRight,
@@ -51,7 +54,7 @@ class learnnewthingPage extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(vertical: 10),
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.grey[700],
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -65,23 +68,23 @@ class learnnewthingPage extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.book,
-                              color: Color(0xFF6985e8),
+                              color: Colors.blue[200],
                               size: 40,
                             ),
                             const SizedBox(width: 20),
                             Expanded(
                               child: Text(
                                 'Career Training ${index + 1}', // Dynamic course name
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                  color: Colors.grey[200],
                                 ),
                               ),
                             ),
-                            const Icon(
+                            Icon(
                               Icons.arrow_forward,
-                              color: Color(0xFF6985e8),
+                              color: Colors.blue[200],
                             ),
                           ],
                         ),

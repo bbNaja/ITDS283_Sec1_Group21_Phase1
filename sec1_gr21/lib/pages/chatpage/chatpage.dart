@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'package:sec1_gr21/components/appbar.dart';
 import 'package:sec1_gr21/components/chat/user_tile.dart';
 import 'package:sec1_gr21/pages/chatpage/msgpage.dart';
 import 'package:sec1_gr21/util/chat/chat_service.dart';
@@ -55,11 +57,17 @@ class _ChatPageState extends State<ChatPage> {
     String userName = userData["name"]?.isNotEmpty == true
         ? userData["name"]
         : userData["email"] ?? "Guest";
+
     // Default to "Unknown" if null
     String userId = userData["uid"] ?? ""; // Default to empty string if null
+    if (userName.isEmpty ||
+        userName == "Guest" ||
+        userName == FirebaseAuth.instance.currentUser?.email) {
+      return const SizedBox(); // Return an empty widget to not display it
+    }
 
-    if (userName != FirebaseAuth.instance.currentUser?.email) {
-      //not myself
+    if (userName != FirebaseAuth.instance.currentUser?.email ||
+        userName != "Guest") {
       return UserTile(
         text: userName,
         onTap: () {

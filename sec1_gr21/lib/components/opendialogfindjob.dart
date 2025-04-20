@@ -52,7 +52,7 @@ Future<Map<String, dynamic>?> openDialogfindjob(BuildContext context) async {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    buildTextField("งานที่ต้องการจ้าง", worknameController),
+                    buildTextField("งานที่ต้องการหา", worknameController),
                     buildTextField("ชื่อ", nameController),
                     SizedBox(height: 10),
                     Container(

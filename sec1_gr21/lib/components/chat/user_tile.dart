@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
   final String text;
-  // final String subtitle;
+  final String? subtitle;
   final void Function()? onTap;
 
-  const UserTile({
-    super.key,
-    required this.text,
-    required this.onTap,
-  });
+  const UserTile(
+      {super.key, required this.text, required this.onTap, this.subtitle});
 
   @override
   Widget build(BuildContext context) {

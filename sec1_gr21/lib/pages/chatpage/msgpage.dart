@@ -62,7 +62,7 @@ class Msgpage extends StatelessWidget {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     bool isCurrentUser =
         data["senderID"] == FirebaseAuth.instance.currentUser!.uid;
-
+    DateTime timestamp = (data["timestamp"] as Timestamp).toDate();
     var alignment =
         isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
     return Container(
@@ -71,7 +71,13 @@ class Msgpage extends StatelessWidget {
         crossAxisAlignment:
             isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Chatbubble(message: data["message"], isCurrentUser: isCurrentUser)
+          Chatbubble(message: data["message"], isCurrentUser: isCurrentUser),
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0, right: 10.0),
+            child: Text(
+                '${timestamp.hour}:${timestamp.minute.toString().padLeft(2, '0')}',
+                style: TextStyle(fontSize: 12, color: Colors.grey)),
+          )
         ],
       ),
     );

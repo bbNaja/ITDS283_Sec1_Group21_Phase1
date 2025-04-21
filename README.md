@@ -11,7 +11,7 @@ SeWork is a mobile application designed to connect elderly individuals with flex
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/bbNaja/ITDS283_Sec1_Group21_Phase1.git
-cd ITDS283_Sec1_Group21_Phase1
+cd sec1_gr21
 ```
 2. Install dependencies:
 

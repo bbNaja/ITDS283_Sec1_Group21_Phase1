@@ -34,3 +34,10 @@ cd ITDS283_Sec1_Group21_Phase1
 
 ### Firebase Services
 ### GoogleMap API with Geocoding API to translate LatLng into roads
+
+
+## 📧 Contributors
+
+### Sippakorn Chotiwachira 6687055
+
+### Kantanat Chamnien 6687008
